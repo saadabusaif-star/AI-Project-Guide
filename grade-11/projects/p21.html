@@ -1,0 +1,216 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#081B45"><title>Well Water Salinity Tester – Grade 11 Arduino</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--deep:#081b45;--navy:#0d2c6b;--blue:#17419a;--gold:#ffc845;--soft:#eef4ff;--canvas:#f7f9fd;--card:#fff;--ink:#10203f;--muted:#5a6a88;--line:#dbe4f4;--ok:#1a8f4e;--warnbg:#fff6dc;--warnink:#7a4b00}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--canvas:#0b1222;--card:#131d33;--ink:#e7edf8;--muted:#9fb0cc;--line:#26324c;--soft:#18264a;--blue:#8fb2ff;--navy:#c9dbff;--warnbg:#3a2f12;--warnink:#ffd98a}}
+:root[data-theme="dark"]{--canvas:#0b1222;--card:#131d33;--ink:#e7edf8;--muted:#9fb0cc;--line:#26324c;--soft:#18264a;--blue:#8fb2ff;--navy:#c9dbff;--warnbg:#3a2f12;--warnink:#ffd98a}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--canvas);color:var(--ink);font:16px/1.6 Nunito,system-ui,"Segoe UI",Arial,sans-serif}
+a{color:var(--blue)}
+.wrap{width:min(1000px,calc(100% - 32px));margin:auto}
+/* school header */
+.site-header{color:#fff;background:linear-gradient(180deg,#081b45,#0d2c6b)}
+.top-bar{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 0;flex-wrap:wrap}
+.top-bar-note{color:#ffeab2;font-size:12px}
+.pill{display:inline-block;background:var(--gold);color:#081b45;border-radius:999px;padding:2px 10px;font-size:11px;font-weight:900;letter-spacing:.05em;margin-left:6px}
+.top-bar a{color:#ffeab2;font-size:13px;font-weight:800;text-decoration:none}
+.letterhead{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 0;border-top:1px solid #ffffff22;border-bottom:3px solid var(--gold)}
+.letter-side{display:flex;align-items:center;gap:12px;min-width:0}
+.flag svg{width:46px;height:28px;border-radius:3px;display:block;box-shadow:0 1px 4px #0006}
+.letter-col{font-size:10.5px;line-height:1.55;color:#ffffffcc;margin:0}
+.letter-col p{margin:0}.letter-col .strong{color:var(--gold);font-weight:800;font-size:11.5px}
+.letter-col.ar{text-align:right;direction:rtl;font-size:12px}
+.logo img{width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);background:#fff;display:block}
+.wave svg{display:block;width:100%;height:34px}
+@media(max-width:600px){.letterhead{gap:8px;padding:10px 0}.letter-side{gap:7px;flex:1 1 0}.flag svg{width:30px;height:19px}.logo img{width:38px;height:38px}.letter-col{font-size:8px}.letter-col .strong{font-size:9px}.letter-col.ar{font-size:9.5px}}
+/* hero */
+.hero{padding:22px 0 6px}
+.kicker{color:var(--blue);font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
+.hero h1{margin:4px 0 6px;font-size:clamp(1.7rem,4.5vw,2.5rem);line-height:1.15;color:var(--navy)}
+.hero p{margin:0;color:var(--muted);max-width:760px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{background:var(--soft);border:1px solid var(--line);color:var(--ink);padding:5px 12px;border-radius:999px;font-weight:800;font-size:.86rem}
+.chip.due{background:var(--warnbg);color:var(--warnink);border-color:transparent}
+/* nav */
+nav.steps-nav{position:sticky;top:0;z-index:20;background:var(--canvas);border-bottom:1px solid var(--line);margin-top:14px}
+nav.steps-nav .wrap{display:flex;gap:6px;overflow-x:auto;padding:10px 0;scrollbar-width:none}
+nav.steps-nav a{flex:0 0 auto;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-weight:800;font-size:.9rem}
+nav.steps-nav a:hover{border-color:var(--gold)}
+section{padding:26px 0 4px;scroll-margin-top:60px}
+h2{color:var(--navy);margin:0 0 6px;font-size:1.45rem}
+.sub{color:var(--muted);margin:0 0 14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:12px}
+.corner{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.corner b{display:block;color:var(--navy)}.corner span{font-size:.9rem;color:var(--muted)}
+/* steps */
+ol.timeline{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+ol.timeline li{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px 12px 14px;display:flex;gap:12px;align-items:flex-start}
+ol.timeline .num{flex:0 0 38px;height:38px;border-radius:50%;background:var(--navy);color:var(--card);display:grid;place-items:center;font-weight:900}
+ol.timeline li.done{border-color:var(--ok)}ol.timeline li.done .num{background:var(--ok);color:#fff}
+ol.timeline .body{flex:1}ol.timeline .body>b:first-child{display:block;font-size:1.05rem}
+ol.timeline .body small{color:var(--muted);font-weight:700}
+ol.timeline label{display:flex;align-items:center;gap:6px;font-size:.82rem;color:var(--muted);margin-top:6px;cursor:pointer}
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 16px;margin-bottom:10px}
+details[open]{padding-bottom:12px}
+summary{cursor:pointer;font-weight:900;color:var(--navy);padding:10px 0;font-size:1.05rem}
+details ol,details ul{margin:4px 0;padding-left:1.3em}details li{margin:4px 0}
+.tools a{display:block;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.tools a:hover{border-color:var(--gold)}.tools b{display:block;color:var(--navy)}.tools span{font-size:.86rem;color:var(--muted)}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;font-size:.94rem}
+th{background:#0d2c6b;color:#fff}td.m{font-weight:900;text-align:center;width:70px}
+.tablewrap{overflow-x:auto}
+pre.copy{white-space:pre-wrap;background:var(--soft);border-radius:10px;padding:12px;font:13.5px/1.5 ui-monospace,Consolas,monospace;margin:8px 0}
+.btn{display:inline-flex;gap:6px;align-items:center;background:#0d2c6b;color:#fff;border:0;border-radius:10px;padding:9px 14px;font-weight:800;cursor:pointer;font-size:.92rem;text-decoration:none}
+.note{background:var(--warnbg);color:var(--warnink);border-radius:12px;padding:12px 14px;margin:12px 0;font-size:.94rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:720px){.two{grid-template-columns:1fr}}
+/* footer */
+.site-footer{background:#081b45;color:#ffffffb0;margin-top:40px;text-align:center}
+.credits{background:#0b2358;padding:16px 0}
+.c-k{color:var(--gold);font-size:10px;font-weight:900;letter-spacing:.18em}
+.c-names{color:#fff;font-size:14px;font-weight:800;margin:4px 0}
+.c-contact{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;font-size:13px;margin:6px 0}
+.c-contact a{color:var(--gold);font-weight:800;text-decoration:none;border-bottom:1px dashed #ffc84588}
+.motto{display:flex;justify-content:center;gap:30px;padding:12px;color:#ffeab2;letter-spacing:.22em;font-size:11px;font-weight:800;border-top:1px solid #ffffff18}
+.bottom{font-size:11px;padding:0 0 16px}
+
+.pcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,290px),1fr));gap:12px}
+.pcard{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;text-decoration:none;color:var(--ink)}
+.pcard:hover{border-color:var(--gold);box-shadow:0 10px 24px -18px #0d2c6b}
+.pcard img{width:100%;height:120px;object-fit:cover;object-position:center;background:#fff;border-bottom:1px solid var(--line)}
+.pcard .pc{padding:10px 14px 14px}.pcard b{color:var(--navy);font-size:1.05rem;display:block}
+.pcard small{color:var(--muted);display:block;margin:2px 0 6px}
+.tag{display:inline-block;background:var(--soft);border-radius:6px;padding:1px 8px;font-size:.78rem;font-weight:800;margin:2px 2px 0 0}
+.lvl-Easy{background:#e3f6ea;color:#14633a}.lvl-Medium{background:#fff1cc;color:#7a4b00}.lvl-Hard{background:#fde4e1;color:#9b2b1d}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.filters button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;font-weight:800;cursor:pointer}
+.filters button[aria-pressed="true"]{background:#0d2c6b;color:#fff;border-color:#0d2c6b}
+.partgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:12px}
+.part{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.part img{width:100%;height:130px;object-fit:contain;background:#fff;border-bottom:1px solid var(--line)}
+.part .pc{padding:10px 14px 12px;font-size:.9rem}.part b{color:var(--navy);font-size:1rem;display:block;margin-bottom:2px}
+.part .conn{background:var(--soft);border-radius:8px;padding:6px 8px;margin:6px 0;font-size:.82rem}
+.part .tip{color:var(--muted);font-size:.82rem}
+.part a{font-weight:800;font-size:.85rem}
+.diagram{width:100%;height:auto;background:#fff;border:1px solid var(--line);border-radius:12px}
+pre.code{white-space:pre;overflow:auto;max-height:520px;background:#0f1a2e;color:#e6edf8;border-radius:12px;padding:14px;font:12.5px/1.45 ui-monospace,Consolas,monospace}
+.dlrow{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.btn.alt{background:var(--card);color:var(--navy);border:1px solid var(--line)}
+.prompt{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.prompt .when{font-size:.8rem;font-weight:900;color:var(--blue);text-transform:uppercase;letter-spacing:.06em}
+.prompt pre{white-space:pre-wrap;margin:6px 0 8px;background:var(--soft);border-radius:8px;padding:10px;font:13.5px/1.5 ui-monospace,Consolas,monospace}
+.sim{display:flex;gap:10px;flex-wrap:wrap}
+</style></head><body>
+<header class="site-header"><div class="wrap">
+ <div class="top-bar"><span class="top-bar-note">🇦🇪 Building Brave Tomorrow<span class="pill">AI PROJECT 2026–27</span></span><a href="../">← All Grade 11 projects</a></div>
+ <div class="letterhead">
+  <div class="letter-side"><span class="flag"><svg viewBox="0 0 100 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="60" fill="#FFFFFF"/><rect width="100" height="20" fill="#00732F"/><rect y="40" width="100" height="20" fill="#000000"/><rect width="25" height="60" fill="#FF0000"/></svg></span>
+   <div class="letter-col"><p class="strong">UNITED ARAB EMIRATES</p><p>MINISTRY OF EDUCATION</p><p>THE FIRST ACADEMY – PRIVATE, AJMAN</p></div></div>
+  <div class="letter-side" dir="rtl"><div class="letter-col ar"><p class="strong">الإمارات العربية المتحدة</p><p>وزارة التربية والتعليم</p><p>مدرسة الأكاديمية الأولى الخاصة - عجمان</p></div>
+   <div class="logo"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4bcqYCf6vl8HjqyLT_uE8tNqEz8euqWq0Z9y0kgCaVQ&s=10" alt="The First Academy logo"></div></div>
+ </div></div>
+ <div class="wave"><svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,32 C240,60 480,0 720,18 C960,36 1200,60 1440,28 L1440,60 L0,60 Z" fill="currentColor" style="color:var(--canvas)"/></svg></div></header>
+<div class="wrap hero"><div class="kicker">Grade 11 Arduino • Project 21 of 21 • 11.A — Group 6</div>
+<h1>Well Water Salinity Tester</h1><p>Tells a farmer whether the well water will feed the crop or kill it</p>
+<div class="chips"><span class="chip lvl-Hard">Hard</span><span class="chip">Soil probe as conductivity cell</span><span class="chip due">⏰ Due Friday 30 October</span></div></div>
+<nav class="steps-nav"><div class="wrap"><a href="#purpose">Purpose</a><a href="#parts">Parts</a><a href="#wiring">Wiring</a><a href="#code">Code</a><a href="#build">Build & test</a><a href="#ai">AI prompts</a><a href="#help">Problems</a><a href="#show">Poster & video</a><a href="#files">Files</a></div></nav>
+<div class="wrap">
+<section id="purpose"><h2>🎯 Purpose</h2><div class="card"><p style="margin-top:0"><b>What it does:</b> The two-pin probe sits in a water sample and measures how well it conducts. The 7-segment shows a salinity band from 0 (clean) to 9 (heavily saline), a knob sets the limit the crop can tolerate, and past that limit the red LED and buzzer warn that the water is unsafe to irrigate with.</p><p><b>🇦🇪 UAE link:</b> Rising groundwater salinity — the biggest threat to farming in the Emirates</p><p><b>Why it matters:</b> Groundwater under the Emirates has been getting saltier for decades, because more is pumped out than rain puts back and seawater moves in behind it. A farmer cannot see the difference between good well water and water that will slowly poison the soil — the damage shows up in the crop weeks later, by which time the field is already harmed. The knob matters because tolerance is not one number: date palms take far more salt than tomatoes do. This is the one project in the pack where your class produces a real calibration curve from known samples, which is exactly what a laboratory does.</p><p style="margin-bottom:0"><b>Who it helps:</b> Farmers in inland areas who irrigate with groundwater that can be salty.</p></div></section>
+<section id="parts"><h2>🧩 Parts you need</h2><div class="card" style="margin-bottom:12px"><ul style="margin:0;padding-left:1.2em"><li>Arduino UNO R3 + USB cable — <b>1</b></li><li>400-point breadboard — <b>1</b></li><li>Soil moisture probe + module — <b>1</b></li><li>Potentiometer 10k — <b>1</b></li><li>1-digit 7-segment (common cathode) — <b>1</b></li><li>LED — <b>2</b></li><li>Active buzzer — <b>1</b></li><li>220Ω resistors (red-red-brown) — <b>9</b></li><li>Jumper wires (male-male) — <b>about 20</b></li><li>Male-FEMALE jumper wires (for modules) — <b>3</b></li></ul></div><div class="partgrid"><div class="part"><img src="../files/parts/uno.png" alt="Arduino UNO R3"><div class="pc"><b>Arduino UNO R3</b>The brain. Runs your code; 14 digital pins (D0–D13) and 6 analog inputs (A0–A5).<div class="conn">🔌 USB to laptop • 5V and GND to the breadboard rails</div><div class="tip">💡 Never use D0/D1 – they are the USB serial line.</div><a href="https://docs.arduino.cc/hardware/uno-rev3/" target="_blank" rel="noopener">🔗 Arduino UNO docs</a> </div></div><div class="part"><img src="../files/parts/bb.png" alt="Breadboard"><div class="pc"><b>Breadboard</b>Joins parts without soldering. Each row of 5 holes is connected; the long side rails carry 5V (+) and GND (−).<div class="conn">🔌 Arduino 5V → red rail • GND → blue rail</div><div class="tip">💡 Buttons and chips must straddle the centre gap.</div><a href="https://learn.sparkfun.com/tutorials/how-to-use-a-breadboard" target="_blank" rel="noopener">🔗 How to use a breadboard</a> </div></div><div class="part"><img src="../files/parts/soil.png" alt="Soil moisture probe + module"><div class="pc"><b>Soil moisture probe + module</b>Measures how well soil or water conducts – wetter or saltier = different reading.<div class="conn">🔌 VCC → 5V • GND → GND • AO → A0</div><div class="tip">💡 The probe corrodes – lift it out between tests.</div><a href="https://en.wikipedia.org/wiki/Soil_moisture_sensor" target="_blank" rel="noopener">🔗 Soil moisture sensor (Wikipedia)</a> </div></div><div class="part"><img src="../files/parts/pot.png" alt="Potentiometer (knob)"><div class="pc"><b>Potentiometer (knob)</b>A knob that gives a value 0–1023 – used to set a level.<div class="conn">🔌 Outer legs → 5V and GND • middle leg → analog pin</div><div class="tip">💡 If it works backwards, swap the outer legs.</div><a href="https://docs.arduino.cc/built-in-examples/basics/AnalogReadSerial/" target="_blank" rel="noopener">🔗 AnalogReadSerial example</a> </div></div><div class="part"><img src="../files/parts/seg.png" alt="7-segment display"><div class="pc"><b>7-segment display</b>Shows one number 0–9 using 7 small LED bars (a–g).<div class="conn">🔌 a–g → D2–D8 each through 220Ω • COM → GND</div><div class="tip">💡 Nothing lights? It may be common ANODE (COM → 5V).</div><a href="https://en.wikipedia.org/wiki/Seven-segment_display" target="_blank" rel="noopener">🔗 7-segment display (Wikipedia)</a> </div></div><div class="part"><img src="../files/parts/led.png" alt="LED"><div class="pc"><b>LED</b>A small light – ON or OFF from a digital pin.<div class="conn">🔌 Long leg (+) → 220Ω → pin • short leg (−) → GND</div><div class="tip">💡 No resistor = burnt LED. Backwards = no light.</div><a href="https://docs.arduino.cc/built-in-examples/basics/Blink/" target="_blank" rel="noopener">🔗 Blink example</a> </div></div><div class="part"><img src="../files/parts/abuzz.png" alt="Active buzzer"><div class="pc"><b>Active buzzer</b>Makes one fixed beep when the pin is HIGH.<div class="conn">🔌 + (long leg) → pin • − → GND</div><div class="tip">💡 It cannot play notes – that needs the passive buzzer.</div><a href="https://docs.arduino.cc/built-in-examples/digital/toneMelody/" target="_blank" rel="noopener">🔗 Buzzer tone example</a> </div></div><div class="part"><img src="../files/parts/res.png" alt="Resistors"><div class="pc"><b>Resistors</b>Limit current. 220Ω (red-red-brown) protects LEDs; 10kΩ (brown-black-orange) makes dividers for LDR / thermistor.<div class="conn">🔌 In series with an LED, or from the analog pin to GND in a divider</div><div class="tip">💡 Read the colour bands before you use one.</div><a href="https://learn.sparkfun.com/tutorials/resistors" target="_blank" rel="noopener">🔗 Resistors &amp; colour code</a> </div></div><div class="part"><img src="../files/parts/wires.png" alt="Jumper wires"><div class="pc"><b>Jumper wires</b>Carry power and signals between the board and the parts.<div class="conn">🔌 Male-male for the breadboard • male-female for sensor modules</div><div class="tip">💡 Use red for 5V and black for GND – easier to check.</div><a href="https://learn.sparkfun.com/tutorials/how-to-use-a-breadboard" target="_blank" rel="noopener">🔗 Breadboard &amp; wires guide</a> </div></div></div></section>
+<section id="wiring"><h2>🔌 Wiring</h2><p class="sub">Rails first: Arduino 5V → red (+) rail, GND → blue (−) rail. Build with the USB unplugged.</p>
+<img class="diagram" src="../files/diagrams/P21_Well-Water-Salinity-Tester.png" alt="Wiring diagram for Well Water Salinity Tester"><img class="diagram" style="margin-top:10px" src="../files/diagrams/pinout_7seg.png" alt="7-segment pinout">
+<div class="tablewrap" style="margin-top:12px"><table><tr><th>Component</th><th>Pin</th><th>Goes to</th><th>Resistor</th><th>Note</th></tr><tr><td>Soil probe + module</td><td>VCC</td><td><b>5V rail</b></td><td>—</td><td></td></tr><tr><td>Soil probe + module</td><td>GND</td><td><b>GND rail</b></td><td>—</td><td></td></tr><tr><td>Soil probe + module</td><td>AO</td><td><b>A0</b></td><td>—</td><td>analog</td></tr><tr><td>Potentiometer 10k</td><td>left leg</td><td><b>GND rail</b></td><td>—</td><td></td></tr><tr><td>Potentiometer 10k</td><td>middle leg</td><td><b>A1</b></td><td>—</td><td>crop tolerance</td></tr><tr><td>Potentiometer 10k</td><td>right leg</td><td><b>5V rail</b></td><td>—</td><td></td></tr><tr><td>7-segment display</td><td>segment a</td><td><b>D2</b></td><td>220Ω</td><td></td></tr><tr><td>7-segment display</td><td>segment b</td><td><b>D3</b></td><td>220Ω</td><td></td></tr><tr><td>7-segment display</td><td>segment c</td><td><b>D4</b></td><td>220Ω</td><td></td></tr><tr><td>7-segment display</td><td>segment d</td><td><b>D5</b></td><td>220Ω</td><td></td></tr><tr><td>7-segment display</td><td>segment e</td><td><b>D6</b></td><td>220Ω</td><td></td></tr><tr><td>7-segment display</td><td>segment f</td><td><b>D7</b></td><td>220Ω</td><td></td></tr><tr><td>7-segment display</td><td>segment g</td><td><b>D8</b></td><td>220Ω</td><td></td></tr><tr><td>7-segment display</td><td>COM (either common pin)</td><td><b>GND rail</b></td><td>—</td><td>common cathode</td></tr><tr><td>Green LED (safe)</td><td>+ long leg</td><td><b>D9</b></td><td>220Ω</td><td></td></tr><tr><td>Green LED (safe)</td><td>− short leg</td><td><b>GND rail</b></td><td>—</td><td></td></tr><tr><td>Red LED (too salty)</td><td>+ long leg</td><td><b>D10</b></td><td>220Ω</td><td></td></tr><tr><td>Red LED (too salty)</td><td>− short leg</td><td><b>GND rail</b></td><td>—</td><td></td></tr><tr><td>Active buzzer</td><td>+ (long leg)</td><td><b>D11</b></td><td>—</td><td></td></tr><tr><td>Active buzzer</td><td>−</td><td><b>GND rail</b></td><td>—</td><td></td></tr></table></div>
+<div class="sim" style="margin-top:12px"><a class="btn alt" href="https://www.tinkercad.com/circuits" target="_blank" rel="noopener">💻 Simulate in Tinkercad</a><a class="btn alt" href="https://wokwi.com/projects/new/arduino-uno" target="_blank" rel="noopener">🧪 Try in Wokwi simulator</a></div></section>
+<section id="code"><h2>💾 The code (tested)</h2><p class="sub">Change only the lines marked CALIBRATE / MEASURE with YOUR readings.</p>
+<div class="dlrow"><button class="btn" onclick="copyText('code',this)">📋 Copy code</button><a class="btn alt" href="../files/code/P21_Well-Water-Salinity-Tester.ino" download>⬇️ Download .ino</a></div>
+<pre class="code" id="code">/* PROJECT 21 - WELL WATER SALINITY TESTER  (11.A Group 6)
+   The soil probe is used as a conductivity cell: salty water conducts better.
+   Salinity 0 (fresh) to 9 (your saltiest cup) on the display. The knob sets
+   what the crop can tolerate: saltier than the knob = RED + beep.       */
+const int PROBE = A0, KNOB = A1;
+const int GRN = 9, REDL = 10;           // LEDs (each through 220 ohm)
+const int BUZZ = 11;                    // ACTIVE buzzer
+
+// ---- CALIBRATE from your own cups (Serial Monitor) ----
+// With most kit modules the number goes DOWN as water gets saltier.
+// Just type YOUR two numbers: map() works in either direction.
+const int CLEAN_READING = 750;          // probe in tap / bottled water
+const int SALTY_READING = 200;          // probe in your saltiest cup
+
+unsigned long lastBeep = 0;
+
+// ---------- 7-SEGMENT DISPLAY (pins a,b,c,d,e,f,g) ----------
+const int SEG[7] = {2, 3, 4, 5, 6, 7, 8};
+const bool SEG_COMMON_ANODE = false;   // true = common pin goes to 5V instead of GND
+const byte DIGIT[10][7] = {
+  {1,1,1,1,1,1,0}, {0,1,1,0,0,0,0}, {1,1,0,1,1,0,1}, {1,1,1,1,0,0,1},
+  {0,1,1,0,0,1,1}, {1,0,1,1,0,1,1}, {1,0,1,1,1,1,1}, {1,1,1,0,0,0,0},
+  {1,1,1,1,1,1,1}, {1,1,1,1,0,1,1} };
+
+void show(int n) {                      // show one number 0-9
+  n = constrain(n, 0, 9);
+  for (int i = 0; i &lt; 7; i++) {
+    bool on = DIGIT[n][i];
+    digitalWrite(SEG[i], SEG_COMMON_ANODE ? !on : on);
+  }
+}
+
+int readProbe() {
+  long s = 0;
+  for (int i = 0; i &lt; 10; i++) { s += analogRead(PROBE); delay(2); }
+  return s / 10;
+}
+
+void setup() {
+  Serial.begin(9600);
+  for (int i = 0; i &lt; 7; i++) pinMode(SEG[i], OUTPUT);
+  pinMode(GRN, OUTPUT); pinMode(REDL, OUTPUT); pinMode(BUZZ, OUTPUT);
+}
+
+void loop() {
+  int raw = readProbe();
+  int salinity  = constrain(map(raw, CLEAN_READING, SALTY_READING, 0, 9), 0, 9);
+  int tolerance = map(analogRead(KNOB), 0, 1023, 0, 9);
+  show(salinity);
+
+  bool tooSalty = (salinity &gt; tolerance);
+  digitalWrite(REDL, tooSalty);
+  digitalWrite(GRN, !tooSalty);
+  if (tooSalty &amp;&amp; millis() - lastBeep &gt;= 1000) lastBeep = millis();
+  digitalWrite(BUZZ, (tooSalty &amp;&amp; millis() - lastBeep &lt; 150) ? HIGH : LOW);
+
+  Serial.print(&quot;raw=&quot;); Serial.print(raw);
+  Serial.print(&quot;  salinity=&quot;); Serial.print(salinity);
+  Serial.print(&quot;  crop limit=&quot;); Serial.println(tolerance);
+  delay(100);
+}
+</pre>
+<p class="sub">Arduino IDE: save it inside a folder with the same name (P21_Well-Water-Salinity-Tester). Tools › Board › Arduino Uno → Port → Upload → Serial Monitor 9600.</p></section>
+<section id="build"><h2>🛠️ Build & test</h2>
+<div class="two"><div class="card"><b>Build order</b><ol><li>Arduino 5V → red rail, GND → blue rail.</li><li>Wire the probe and print the raw reading with the probe in the air — that is your zero.</li><li>Make five cups: pure water, then a quarter, a half, three quarters and a full spoon of salt in the same volume. Record the raw reading in each. Insert the probe to the SAME depth every time.</li><li>Plot reading against salt added. That graph is your calibration and it goes on the poster.</li><li>Add the knob, the display, the LEDs and the buzzer, and put your own two end readings into the map().</li><li>Partner checks every wire, THEN plug in USB.</li><li>Upload and open Serial Monitor (9600).</li></ol></div>
+<div class="card"><b>Test & record (your evidence)</b><ul><li>Read each of your five known cups three times and record every value. How repeatable is it?</li><li>Test tap water, bottled water and salt water. Rank them and see whether the ranking matches what you expected.</li><li>Rinse and dry the probe between samples, then repeat one sample. Does carry-over change the reading?</li></ul><b>Tinkercad first</b><ul><li>Soil probe → use Tinkercad&#x27;s Soil Moisture Sensor, or a Potentiometer on the same pin.</li><li>Active buzzer → use an LED + 220Ω in its place so you can SEE every beep (no code change).</li><li>7-segment → &#x27;7 Segment Display&#x27;, set it to Cathode in the inspector.</li></ul></div></div></section>
+<section id="ai"><h2>🤖 AI prompts for this project</h2><p class="sub">Copy a prompt into ChatGPT, Claude, Gemini or Z.ai, fill the blanks, and keep what you used for your marks (Core).</p><div class="prompt"><div class="when">Before you plug in USB</div><pre id="pp0">Check our wiring before we power it. Project: &quot;Well Water Salinity Tester&quot; on an Arduino UNO with Soil moisture probe + module, Potentiometer (knob), 7-segment display, LED, Active buzzer. Here is our wiring table: [paste the wiring table]. Is anything dangerous or wrong (5V/GND swapped, LED without resistor, wrong pin)?</pre><button class="btn" onclick="copyText('pp0',this)">📋 Copy prompt</button></div><div class="prompt"><div class="when">Understand the code</div><pre id="pp1">Explain our &quot;Well Water Salinity Tester&quot; Arduino code in simple steps: what setup() does, what loop() repeats, and which line decides when the output turns on. [paste the code]</pre><button class="btn" onclick="copyText('pp1',this)">📋 Copy prompt</button></div><div class="prompt"><div class="when">Calibrate with your readings</div><pre id="pp2">In our &quot;Well Water Salinity Tester&quot; the Serial Monitor shows ___ when ___ and ___ when ___. What should we put in CLEAN_READING and why? Explain like a teacher, no full code.</pre><button class="btn" onclick="copyText('pp2',this)">📋 Copy prompt</button></div><div class="prompt"><div class="when">Problem in class</div><pre id="pp3">In our &quot;Well Water Salinity Tester&quot;: Every cup reads the same. List the most likely causes in our wiring or code and how to check each one step by step.</pre><button class="btn" onclick="copyText('pp3',this)">📋 Copy prompt</button></div><div class="prompt"><div class="when">Problem in class</div><pre id="pp4">In our &quot;Well Water Salinity Tester&quot;: The reading drifts upward while the probe sits in one cup. List the most likely causes in our wiring or code and how to check each one step by step.</pre><button class="btn" onclick="copyText('pp4',this)">📋 Copy prompt</button></div><div class="prompt"><div class="when">Problem in class</div><pre id="pp5">In our &quot;Well Water Salinity Tester&quot;: The band runs backwards. List the most likely causes in our wiring or code and how to check each one step by step.</pre><button class="btn" onclick="copyText('pp5',this)">📋 Copy prompt</button></div><div class="prompt"><div class="when">Problem in class</div><pre id="pp6">In our &quot;Well Water Salinity Tester&quot;: 7-segment shows the wrong shapes. List the most likely causes in our wiring or code and how to check each one step by step.</pre><button class="btn" onclick="copyText('pp6',this)">📋 Copy prompt</button></div><div class="prompt"><div class="when">Make one improvement</div><pre id="pp7">We want to improve our &quot;Well Water Salinity Tester&quot;: Use your calibration curve to convert the band into an estimated grams-per-litre figure and print that to Serial instead of a 0-9 band. Explain what to change in the code (only the changed lines) and how we can test it in one lesson.</pre><button class="btn" onclick="copyText('pp7',this)">📋 Copy prompt</button></div><div class="prompt"><div class="when">Explain it for the video &amp; poster</div><pre id="pp8">Help us write a 60-second explanation of our &quot;Well Water Salinity Tester&quot; for STEM Week visitors: the UAE problem, how the sensor and Arduino decide, and our test results: [paste results]. Simple English, 5 short sentences.</pre><button class="btn" onclick="copyText('pp8',this)">📋 Copy prompt</button></div></section>
+<section id="help"><h2>🆘 Problems in this project</h2><details><summary>Every cup reads the same</summary><p style="margin:0 0 6px">the probe is not going in to the same depth, or not deep enough to cover both pins.</p></details><details><summary>The reading drifts upward while the probe sits in one cup</summary><p style="margin:0 0 6px">that is electrolysis on the pins. Take a reading, lift the probe out, and say so in your pitch — it is the reason laboratory meters use AC, not DC.</p></details><details><summary>The band runs backwards</summary><p style="margin:0 0 6px">CLEAN_READING and SALTY_READING are swapped.</p></details><details><summary>7-segment shows the wrong shapes</summary><p style="margin:0 0 6px">one segment wire is in the wrong pin — check a→D2 … g→D8 against the pinout picture.</p></details><p class="sub">More fixes: <a href="../#help">all troubleshooting</a>.</p></section>
+<section id="show"><h2>🖼️ Cover, poster & video</h2>
+<div class="two"><div class="card"><b>📦 Cover idea</b><p style="margin:4px 0">a cardboard well with a small bucket; the probe goes into the water cup.</p><b>🏁 Challenge</b><p style="margin:4px 0 0">Use your calibration curve to convert the band into an estimated grams-per-litre figure and print that to Serial instead of a 0-9 band.</p></div>
+<div class="card"><b>🖼️ Poster</b>: name, problem, how it works (3 steps), wiring photo, results, team names.<br><b>🎥 Video 1–2 min</b>: problem • wiring • AI help • live demo • results.</div></div>
+<h2 style="margin-top:18px">📊 Marks – 20</h2><div class="tablewrap"><table><tr><th>Criterion</th><th>What you must do</th><th>For your project</th><th>Marks</th></tr><tr><td><b>🖼️ Support</b></td><td>Choose an idea and create a clear project poster.</td><td>Clear poster of your project.</td><td class="m">4</td></tr><tr><td><b>🤖 Core</b></td><td>Use an AI tool and document the required prompts, examples, or data.</td><td>Use an AI tool; save your prompts + sensor readings.</td><td class="m">4</td></tr><tr><td><b>🧪 Advanced</b></td><td>Build, test, and improve the project using evidence.</td><td>Real build, readings, one improvement.</td><td class="m">4</td></tr><tr><td><b>🎥 Video</b></td><td>Explain the AI process and results in a short video.</td><td>Problem, wiring, AI help, demo, results.</td><td class="m">4</td></tr><tr><td><b>⏰ On time</b></td><td>Submit the complete project on time.</td><td>Everything in by Friday 30 October.</td><td class="m">4</td></tr><tr><td><b>Total</b></td><td></td><td></td><td class="m">20</td></tr></table></div></section>
+<section id="files"><h2>📁 Files</h2><div class="dlrow"><a class="btn" href="../files/sheets/P21_Well-Water-Salinity-Tester.pdf" target="_blank" rel="noopener">📄 Project sheet (PDF)</a><a class="btn alt" href="../files/sheets/P21_Well-Water-Salinity-Tester.docx" download>📝 Sheet (Word – fill the tables)</a><a class="btn alt" href="../files/code/P21_Well-Water-Salinity-Tester.ino" download>💾 Code (.ino)</a><a class="btn alt" href="../files/diagrams/P21_Well-Water-Salinity-Tester.png" target="_blank" rel="noopener">🔌 Wiring diagram</a></div>
+<div class="dlrow"><a class="btn alt" href="p20.html">← Hearing Range Tester</a><a class="btn alt" href="../">All projects</a><a class="btn alt" href="p01.html">Midday Break Guard →</a></div></section>
+</div>
+<footer class="site-footer"><div class="credits"><div class="wrap">
+ <div class="c-k">ICT DEPARTMENT · THE FIRST ACADEMY</div>
+ <div class="c-names">Mr. Saad Abu Saif — ICT Teacher</div>
+ <div class="c-contact"><a href="mailto:saad.abusaif@firstacademy.org">✉️ saad.abusaif@firstacademy.org</a><a href="https://linktr.ee/saadabusaif" target="_blank" rel="noopener">🔗 Linktree</a></div></div></div>
+ <div class="motto"><span>RESPECT</span><span>BELONG</span><span>ACHIEVE</span></div>
+ <div class="bottom">© 2026 The First Academy — Week 8–9 AI Project guide</div></footer>
+<script>
+function copyText(id,btn){const t=document.getElementById(id).innerText;const done=ok=>{const o=btn.textContent;btn.textContent=ok?'✓ Copied':'Select & copy';setTimeout(()=>btn.textContent=o,1500)};
+ if(navigator.clipboard){navigator.clipboard.writeText(t).then(()=>done(true),()=>done(false))}else{done(false)}}
+(function(){const key='tfa-steps-'+location.pathname;let s={};try{s=JSON.parse(localStorage.getItem(key)||'{}')}catch(e){}
+ document.querySelectorAll('ol.timeline li').forEach((li,i)=>{const cb=li.querySelector('input[type=checkbox]');if(!cb)return;cb.checked=!!s[i];li.classList.toggle('done',cb.checked);
+  cb.addEventListener('change',()=>{s[i]=cb.checked;li.classList.toggle('done',cb.checked);try{localStorage.setItem(key,JSON.stringify(s))}catch(e){}})})})();
+</script></body></html>

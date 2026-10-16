@@ -1,0 +1,234 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#081B45"><title>Wudu Water Guardian – Grade 11 Arduino</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--deep:#081b45;--navy:#0d2c6b;--blue:#17419a;--gold:#ffc845;--soft:#eef4ff;--canvas:#f7f9fd;--card:#fff;--ink:#10203f;--muted:#5a6a88;--line:#dbe4f4;--ok:#1a8f4e;--warnbg:#fff6dc;--warnink:#7a4b00}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--canvas:#0b1222;--card:#131d33;--ink:#e7edf8;--muted:#9fb0cc;--line:#26324c;--soft:#18264a;--blue:#8fb2ff;--navy:#c9dbff;--warnbg:#3a2f12;--warnink:#ffd98a}}
+:root[data-theme="dark"]{--canvas:#0b1222;--card:#131d33;--ink:#e7edf8;--muted:#9fb0cc;--line:#26324c;--soft:#18264a;--blue:#8fb2ff;--navy:#c9dbff;--warnbg:#3a2f12;--warnink:#ffd98a}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--canvas);color:var(--ink);font:16px/1.6 Nunito,system-ui,"Segoe UI",Arial,sans-serif}
+a{color:var(--blue)}
+.wrap{width:min(1000px,calc(100% - 32px));margin:auto}
+/* school header */
+.site-header{color:#fff;background:linear-gradient(180deg,#081b45,#0d2c6b)}
+.top-bar{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 0;flex-wrap:wrap}
+.top-bar-note{color:#ffeab2;font-size:12px}
+.pill{display:inline-block;background:var(--gold);color:#081b45;border-radius:999px;padding:2px 10px;font-size:11px;font-weight:900;letter-spacing:.05em;margin-left:6px}
+.top-bar a{color:#ffeab2;font-size:13px;font-weight:800;text-decoration:none}
+.letterhead{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 0;border-top:1px solid #ffffff22;border-bottom:3px solid var(--gold)}
+.letter-side{display:flex;align-items:center;gap:12px;min-width:0}
+.flag svg{width:46px;height:28px;border-radius:3px;display:block;box-shadow:0 1px 4px #0006}
+.letter-col{font-size:10.5px;line-height:1.55;color:#ffffffcc;margin:0}
+.letter-col p{margin:0}.letter-col .strong{color:var(--gold);font-weight:800;font-size:11.5px}
+.letter-col.ar{text-align:right;direction:rtl;font-size:12px}
+.logo img{width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);background:#fff;display:block}
+.wave svg{display:block;width:100%;height:34px}
+@media(max-width:600px){.letterhead{gap:8px;padding:10px 0}.letter-side{gap:7px;flex:1 1 0}.flag svg{width:30px;height:19px}.logo img{width:38px;height:38px}.letter-col{font-size:8px}.letter-col .strong{font-size:9px}.letter-col.ar{font-size:9.5px}}
+/* hero */
+.hero{padding:22px 0 6px}
+.kicker{color:var(--blue);font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
+.hero h1{margin:4px 0 6px;font-size:clamp(1.7rem,4.5vw,2.5rem);line-height:1.15;color:var(--navy)}
+.hero p{margin:0;color:var(--muted);max-width:760px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{background:var(--soft);border:1px solid var(--line);color:var(--ink);padding:5px 12px;border-radius:999px;font-weight:800;font-size:.86rem}
+.chip.due{background:var(--warnbg);color:var(--warnink);border-color:transparent}
+/* nav */
+nav.steps-nav{position:sticky;top:0;z-index:20;background:var(--canvas);border-bottom:1px solid var(--line);margin-top:14px}
+nav.steps-nav .wrap{display:flex;gap:6px;overflow-x:auto;padding:10px 0;scrollbar-width:none}
+nav.steps-nav a{flex:0 0 auto;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-weight:800;font-size:.9rem}
+nav.steps-nav a:hover{border-color:var(--gold)}
+section{padding:26px 0 4px;scroll-margin-top:60px}
+h2{color:var(--navy);margin:0 0 6px;font-size:1.45rem}
+.sub{color:var(--muted);margin:0 0 14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:12px}
+.corner{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.corner b{display:block;color:var(--navy)}.corner span{font-size:.9rem;color:var(--muted)}
+/* steps */
+ol.timeline{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+ol.timeline li{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px 12px 14px;display:flex;gap:12px;align-items:flex-start}
+ol.timeline .num{flex:0 0 38px;height:38px;border-radius:50%;background:var(--navy);color:var(--card);display:grid;place-items:center;font-weight:900}
+ol.timeline li.done{border-color:var(--ok)}ol.timeline li.done .num{background:var(--ok);color:#fff}
+ol.timeline .body{flex:1}ol.timeline .body>b:first-child{display:block;font-size:1.05rem}
+ol.timeline .body small{color:var(--muted);font-weight:700}
+ol.timeline label{display:flex;align-items:center;gap:6px;font-size:.82rem;color:var(--muted);margin-top:6px;cursor:pointer}
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 16px;margin-bottom:10px}
+details[open]{padding-bottom:12px}
+summary{cursor:pointer;font-weight:900;color:var(--navy);padding:10px 0;font-size:1.05rem}
+details ol,details ul{margin:4px 0;padding-left:1.3em}details li{margin:4px 0}
+.tools a{display:block;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.tools a:hover{border-color:var(--gold)}.tools b{display:block;color:var(--navy)}.tools span{font-size:.86rem;color:var(--muted)}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;font-size:.94rem}
+th{background:#0d2c6b;color:#fff}td.m{font-weight:900;text-align:center;width:70px}
+.tablewrap{overflow-x:auto}
+pre.copy{white-space:pre-wrap;background:var(--soft);border-radius:10px;padding:12px;font:13.5px/1.5 ui-monospace,Consolas,monospace;margin:8px 0}
+.btn{display:inline-flex;gap:6px;align-items:center;background:#0d2c6b;color:#fff;border:0;border-radius:10px;padding:9px 14px;font-weight:800;cursor:pointer;font-size:.92rem;text-decoration:none}
+.note{background:var(--warnbg);color:var(--warnink);border-radius:12px;padding:12px 14px;margin:12px 0;font-size:.94rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:720px){.two{grid-template-columns:1fr}}
+/* footer */
+.site-footer{background:#081b45;color:#ffffffb0;margin-top:40px;text-align:center}
+.credits{background:#0b2358;padding:16px 0}
+.c-k{color:var(--gold);font-size:10px;font-weight:900;letter-spacing:.18em}
+.c-names{color:#fff;font-size:14px;font-weight:800;margin:4px 0}
+.c-contact{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;font-size:13px;margin:6px 0}
+.c-contact a{color:var(--gold);font-weight:800;text-decoration:none;border-bottom:1px dashed #ffc84588}
+.motto{display:flex;justify-content:center;gap:30px;padding:12px;color:#ffeab2;letter-spacing:.22em;font-size:11px;font-weight:800;border-top:1px solid #ffffff18}
+.bottom{font-size:11px;padding:0 0 16px}
+
+.pcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,290px),1fr));gap:12px}
+.pcard{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;text-decoration:none;color:var(--ink)}
+.pcard:hover{border-color:var(--gold);box-shadow:0 10px 24px -18px #0d2c6b}
+.pcard img{width:100%;height:120px;object-fit:cover;object-position:center;background:#fff;border-bottom:1px solid var(--line)}
+.pcard .pc{padding:10px 14px 14px}.pcard b{color:var(--navy);font-size:1.05rem;display:block}
+.pcard small{color:var(--muted);display:block;margin:2px 0 6px}
+.tag{display:inline-block;background:var(--soft);border-radius:6px;padding:1px 8px;font-size:.78rem;font-weight:800;margin:2px 2px 0 0}
+.lvl-Easy{background:#e3f6ea;color:#14633a}.lvl-Medium{background:#fff1cc;color:#7a4b00}.lvl-Hard{background:#fde4e1;color:#9b2b1d}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.filters button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;font-weight:800;cursor:pointer}
+.filters button[aria-pressed="true"]{background:#0d2c6b;color:#fff;border-color:#0d2c6b}
+.partgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:12px}
+.part{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.part img{width:100%;height:130px;object-fit:contain;background:#fff;border-bottom:1px solid var(--line)}
+.part .pc{padding:10px 14px 12px;font-size:.9rem}.part b{color:var(--navy);font-size:1rem;display:block;margin-bottom:2px}
+.part .conn{background:var(--soft);border-radius:8px;padding:6px 8px;margin:6px 0;font-size:.82rem}
+.part .tip{color:var(--muted);font-size:.82rem}
+.part a{font-weight:800;font-size:.85rem}
+.diagram{width:100%;height:auto;background:#fff;border:1px solid var(--line);border-radius:12px}
+pre.code{white-space:pre;overflow:auto;max-height:520px;background:#0f1a2e;color:#e6edf8;border-radius:12px;padding:14px;font:12.5px/1.45 ui-monospace,Consolas,monospace}
+.dlrow{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.btn.alt{background:var(--card);color:var(--navy);border:1px solid var(--line)}
+.prompt{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.prompt .when{font-size:.8rem;font-weight:900;color:var(--blue);text-transform:uppercase;letter-spacing:.06em}
+.prompt pre{white-space:pre-wrap;margin:6px 0 8px;background:var(--soft);border-radius:8px;padding:10px;font:13.5px/1.5 ui-monospace,Consolas,monospace}
+.sim{display:flex;gap:10px;flex-wrap:wrap}
+</style></head><body>
+<header class="site-header"><div class="wrap">
+ <div class="top-bar"><span class="top-bar-note">🇦🇪 Building Brave Tomorrow<span class="pill">AI PROJECT 2026–27</span></span><a href="../">← All Grade 11 projects</a></div>
+ <div class="letterhead">
+  <div class="letter-side"><span class="flag"><svg viewBox="0 0 100 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="60" fill="#FFFFFF"/><rect width="100" height="20" fill="#00732F"/><rect y="40" width="100" height="20" fill="#000000"/><rect width="25" height="60" fill="#FF0000"/></svg></span>
+   <div class="letter-col"><p class="strong">UNITED ARAB EMIRATES</p><p>MINISTRY OF EDUCATION</p><p>THE FIRST ACADEMY – PRIVATE, AJMAN</p></div></div>
+  <div class="letter-side" dir="rtl"><div class="letter-col ar"><p class="strong">الإمارات العربية المتحدة</p><p>وزارة التربية والتعليم</p><p>مدرسة الأكاديمية الأولى الخاصة - عجمان</p></div>
+   <div class="logo"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4bcqYCf6vl8HjqyLT_uE8tNqEz8euqWq0Z9y0kgCaVQ&s=10" alt="The First Academy logo"></div></div>
+ </div></div>
+ <div class="wave"><svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,32 C240,60 480,0 720,18 C960,36 1200,60 1440,28 L1440,60 L0,60 Z" fill="currentColor" style="color:var(--canvas)"/></svg></div></header>
+<div class="wrap hero"><div class="kicker">Grade 11 Arduino • Project 4 of 21 • 11.B — Group 4</div>
+<h1>Wudu Water Guardian</h1><p>Shows how many litres each ablution actually uses, right at the tap</p>
+<div class="chips"><span class="chip lvl-Medium">Medium</span><span class="chip">IR + 7-segment</span><span class="chip due">⏰ Due Friday 30 October</span></div></div>
+<nav class="steps-nav"><div class="wrap"><a href="#purpose">Purpose</a><a href="#parts">Parts</a><a href="#wiring">Wiring</a><a href="#code">Code</a><a href="#build">Build & test</a><a href="#ai">AI prompts</a><a href="#help">Problems</a><a href="#show">Poster & video</a><a href="#files">Files</a></div></nav>
+<div class="wrap">
+<section id="purpose"><h2>🎯 Purpose</h2><div class="card"><p style="margin-top:0"><b>What it does:</b> An infrared sensor at the tap detects hands underneath and times how long the water runs. It converts that time into litres, shows it on the 7-segment, and turns the LED red with a warning beep once the ablution passes the set limit. A button resets it for the next person.</p><p><b>🇦🇪 UAE link:</b> Not wasting water in wudu — a teaching of the faith and a national water problem</p><p><b>Why it matters:</b> The Prophet, peace be upon him, performed wudu with a small vessel and taught against waste even at a flowing river. A standard mosque tap runs around six litres a minute, and a large mosque serves thousands of ablutions a day — nearly all of it desalinated water. This device scolds nobody. It simply makes an invisible number visible, which is the only thing that reliably changes a habit. It joins faith, engineering and national water policy in one small box.</p><p style="margin-bottom:0"><b>Who it helps:</b> Mosque users and mosque maintenance teams who pay for the water and the energy to make it.</p></div></section>
+<section id="parts"><h2>🧩 Parts you need</h2><div class="card" style="margin-bottom:12px"><ul style="margin:0;padding-left:1.2em"><li>Arduino UNO R3 + USB cable — <b>1</b></li><li>400-point breadboard — <b>1</b></li><li>1-digit 7-segment (common cathode) — <b>1</b></li><li>LED — <b>2</b></li><li>Active buzzer — <b>1</b></li><li>IR obstacle module — <b>1</b></li><li>Push button — <b>1</b></li><li>220Ω resistors (red-red-brown) — <b>9</b></li><li>Jumper wires (male-male) — <b>about 20</b></li><li>Male-FEMALE jumper wires (for modules) — <b>3</b></li></ul></div><div class="partgrid"><div class="part"><img src="../files/parts/uno.png" alt="Arduino UNO R3"><div class="pc"><b>Arduino UNO R3</b>The brain. Runs your code; 14 digital pins (D0–D13) and 6 analog inputs (A0–A5).<div class="conn">🔌 USB to laptop • 5V and GND to the breadboard rails</div><div class="tip">💡 Never use D0/D1 – they are the USB serial line.</div><a href="https://docs.arduino.cc/hardware/uno-rev3/" target="_blank" rel="noopener">🔗 Arduino UNO docs</a> </div></div><div class="part"><img src="../files/parts/bb.png" alt="Breadboard"><div class="pc"><b>Breadboard</b>Joins parts without soldering. Each row of 5 holes is connected; the long side rails carry 5V (+) and GND (−).<div class="conn">🔌 Arduino 5V → red rail • GND → blue rail</div><div class="tip">💡 Buttons and chips must straddle the centre gap.</div><a href="https://learn.sparkfun.com/tutorials/how-to-use-a-breadboard" target="_blank" rel="noopener">🔗 How to use a breadboard</a> </div></div><div class="part"><img src="../files/parts/seg.png" alt="7-segment display"><div class="pc"><b>7-segment display</b>Shows one number 0–9 using 7 small LED bars (a–g).<div class="conn">🔌 a–g → D2–D8 each through 220Ω • COM → GND</div><div class="tip">💡 Nothing lights? It may be common ANODE (COM → 5V).</div><a href="https://en.wikipedia.org/wiki/Seven-segment_display" target="_blank" rel="noopener">🔗 7-segment display (Wikipedia)</a> </div></div><div class="part"><img src="../files/parts/led.png" alt="LED"><div class="pc"><b>LED</b>A small light – ON or OFF from a digital pin.<div class="conn">🔌 Long leg (+) → 220Ω → pin • short leg (−) → GND</div><div class="tip">💡 No resistor = burnt LED. Backwards = no light.</div><a href="https://docs.arduino.cc/built-in-examples/basics/Blink/" target="_blank" rel="noopener">🔗 Blink example</a> </div></div><div class="part"><img src="../files/parts/abuzz.png" alt="Active buzzer"><div class="pc"><b>Active buzzer</b>Makes one fixed beep when the pin is HIGH.<div class="conn">🔌 + (long leg) → pin • − → GND</div><div class="tip">💡 It cannot play notes – that needs the passive buzzer.</div><a href="https://docs.arduino.cc/built-in-examples/digital/toneMelody/" target="_blank" rel="noopener">🔗 Buzzer tone example</a> </div></div><div class="part"><img src="../files/parts/ir.png" alt="IR obstacle module"><div class="pc"><b>IR obstacle module</b>Sends infrared light and sees it bounce back – detects something close.<div class="conn">🔌 VCC → 5V • GND → GND • OUT → pin (LOW = close)</div><div class="tip">💡 Turn the blue screw to set the distance. Fails on black or glass.</div><a href="https://en.wikipedia.org/wiki/Proximity_sensor" target="_blank" rel="noopener">🔗 Proximity sensors (Wikipedia)</a> </div></div><div class="part"><img src="../files/parts/btn.png" alt="Push button"><div class="pc"><b>Push button</b>Lets the user tell the program something.<div class="conn">🔌 One leg → pin (INPUT_PULLUP) • opposite leg → GND</div><div class="tip">💡 Pressed = LOW. Straddle the centre gap.</div><a href="https://docs.arduino.cc/built-in-examples/digital/Button/" target="_blank" rel="noopener">🔗 Button example</a> </div></div><div class="part"><img src="../files/parts/res.png" alt="Resistors"><div class="pc"><b>Resistors</b>Limit current. 220Ω (red-red-brown) protects LEDs; 10kΩ (brown-black-orange) makes dividers for LDR / thermistor.<div class="conn">🔌 In series with an LED, or from the analog pin to GND in a divider</div><div class="tip">💡 Read the colour bands before you use one.</div><a href="https://learn.sparkfun.com/tutorials/resistors" target="_blank" rel="noopener">🔗 Resistors &amp; colour code</a> </div></div><div class="part"><img src="../files/parts/wires.png" alt="Jumper wires"><div class="pc"><b>Jumper wires</b>Carry power and signals between the board and the parts.<div class="conn">🔌 Male-male for the breadboard • male-female for sensor modules</div><div class="tip">💡 Use red for 5V and black for GND – easier to check.</div><a href="https://learn.sparkfun.com/tutorials/how-to-use-a-breadboard" target="_blank" rel="noopener">🔗 Breadboard &amp; wires guide</a> </div></div></div></section>
+<section id="wiring"><h2>🔌 Wiring</h2><p class="sub">Rails first: Arduino 5V → red (+) rail, GND → blue (−) rail. Build with the USB unplugged.</p>
+<img class="diagram" src="../files/diagrams/P04_Wudu-Water-Guardian.png" alt="Wiring diagram for Wudu Water Guardian"><img class="diagram" style="margin-top:10px" src="../files/diagrams/pinout_7seg.png" alt="7-segment pinout">
+<div class="tablewrap" style="margin-top:12px"><table><tr><th>Component</th><th>Pin</th><th>Goes to</th><th>Resistor</th><th>Note</th></tr><tr><td>7-segment display</td><td>segment a</td><td><b>D2</b></td><td>220Ω</td><td></td></tr><tr><td>7-segment display</td><td>segment b</td><td><b>D3</b></td><td>220Ω</td><td></td></tr><tr><td>7-segment display</td><td>segment c</td><td><b>D4</b></td><td>220Ω</td><td></td></tr><tr><td>7-segment display</td><td>segment d</td><td><b>D5</b></td><td>220Ω</td><td></td></tr><tr><td>7-segment display</td><td>segment e</td><td><b>D6</b></td><td>220Ω</td><td></td></tr><tr><td>7-segment display</td><td>segment f</td><td><b>D7</b></td><td>220Ω</td><td></td></tr><tr><td>7-segment display</td><td>segment g</td><td><b>D8</b></td><td>220Ω</td><td></td></tr><tr><td>7-segment display</td><td>COM (either common pin)</td><td><b>GND rail</b></td><td>—</td><td>common cathode</td></tr><tr><td>Green LED</td><td>+ long leg</td><td><b>D9</b></td><td>220Ω</td><td></td></tr><tr><td>Green LED</td><td>− short leg</td><td><b>GND rail</b></td><td>—</td><td></td></tr><tr><td>Red LED</td><td>+ long leg</td><td><b>D10</b></td><td>220Ω</td><td></td></tr><tr><td>Red LED</td><td>− short leg</td><td><b>GND rail</b></td><td>—</td><td></td></tr><tr><td>Active buzzer</td><td>+ (long leg)</td><td><b>D11</b></td><td>—</td><td></td></tr><tr><td>Active buzzer</td><td>−</td><td><b>GND rail</b></td><td>—</td><td></td></tr><tr><td>IR obstacle module</td><td>VCC</td><td><b>5V rail</b></td><td>—</td><td></td></tr><tr><td>IR obstacle module</td><td>GND</td><td><b>GND rail</b></td><td>—</td><td></td></tr><tr><td>IR obstacle module</td><td>OUT</td><td><b>D12</b></td><td>—</td><td>LOW = something close</td></tr><tr><td>Reset button</td><td>leg 1</td><td><b>A0</b></td><td>—</td><td>INPUT_PULLUP</td></tr><tr><td>Reset button</td><td>leg 2 (across the gap)</td><td><b>GND rail</b></td><td>—</td><td></td></tr></table></div>
+<div class="sim" style="margin-top:12px"><a class="btn alt" href="https://www.tinkercad.com/circuits" target="_blank" rel="noopener">💻 Simulate in Tinkercad</a><a class="btn alt" href="https://wokwi.com/projects/new/arduino-uno" target="_blank" rel="noopener">🧪 Try in Wokwi simulator</a></div></section>
+<section id="code"><h2>💾 The code (tested)</h2><p class="sub">Change only the lines marked CALIBRATE / MEASURE with YOUR readings.</p>
+<div class="dlrow"><button class="btn" onclick="copyText('code',this)">📋 Copy code</button><a class="btn alt" href="../files/code/P04_Wudu-Water-Guardian.ino" download>⬇️ Download .ino</a></div>
+<pre class="code" id="code">/* PROJECT 4 - WUDU WATER GUARDIAN  (11.B Group 4)
+   IR sensor sees hands under the tap and times the water with millis().
+   Litres = flow rate x time, shown on the 7-segment. Past the limit the
+   LED turns RED and beeps while water runs. Button = reset for next person. */
+const int GRN = 9, REDL = 10;           // LEDs (each through 220 ohm)
+const int BUZZ = 11;                    // ACTIVE buzzer
+const int IR = 12;                      // IR module OUT (LOW = hands present)
+const int RESETBTN = A0;                // A0 used as a normal digital input
+
+// ---- MEASURE YOUR OWN TAP: seconds to fill a 1-litre bottle -&gt; 1 / seconds ----
+const float FLOW_LPS = 0.10;            // litres per second (0.10 = 6 L per minute)
+const float LIMIT_L  = 3.0;             // litres allowed for one wudu
+
+float litres = 0;
+bool  flowing = false;
+int   lastBtn = HIGH;
+unsigned long lastTick = 0, lastBeep = 0, lastPrint = 0;
+
+// ---------- 7-SEGMENT DISPLAY (pins a,b,c,d,e,f,g) ----------
+const int SEG[7] = {2, 3, 4, 5, 6, 7, 8};
+const bool SEG_COMMON_ANODE = false;   // true = common pin goes to 5V instead of GND
+const byte DIGIT[10][7] = {
+  {1,1,1,1,1,1,0}, {0,1,1,0,0,0,0}, {1,1,0,1,1,0,1}, {1,1,1,1,0,0,1},
+  {0,1,1,0,0,1,1}, {1,0,1,1,0,1,1}, {1,0,1,1,1,1,1}, {1,1,1,0,0,0,0},
+  {1,1,1,1,1,1,1}, {1,1,1,1,0,1,1} };
+
+void show(int n) {                      // show one number 0-9
+  n = constrain(n, 0, 9);
+  for (int i = 0; i &lt; 7; i++) {
+    bool on = DIGIT[n][i];
+    digitalWrite(SEG[i], SEG_COMMON_ANODE ? !on : on);
+  }
+}
+// True ONCE at the moment a button goes from up (HIGH) to pressed (LOW).
+// Holding the button down does NOT repeat it.
+bool justPressed(int pin, int &amp;lastState) {
+  int now = digitalRead(pin);
+  bool pressed = (lastState == HIGH &amp;&amp; now == LOW);
+  lastState = now;
+  if (pressed) delay(25);               // ignore contact bounce
+  return pressed;
+}
+
+void setup() {
+  Serial.begin(9600);
+  for (int i = 0; i &lt; 7; i++) pinMode(SEG[i], OUTPUT);
+  pinMode(GRN, OUTPUT); pinMode(REDL, OUTPUT); pinMode(BUZZ, OUTPUT);
+  pinMode(IR, INPUT);
+  pinMode(RESETBTN, INPUT_PULLUP);
+}
+
+void loop() {
+  bool hands = (digitalRead(IR) == LOW);
+
+  if (hands) {
+    if (!flowing) { flowing = true; lastTick = millis(); }
+    unsigned long now = millis();
+    litres += FLOW_LPS * (now - lastTick) / 1000.0;      // add this slice of time
+    lastTick = now;
+  } else {
+    flowing = false;
+  }
+
+  if (justPressed(RESETBTN, lastBtn)) { litres = 0; Serial.println(&quot;RESET - next person&quot;); }
+
+  show((int)litres);                                     // whole litres 0-9
+  bool over = (litres &gt; LIMIT_L);
+  digitalWrite(REDL, over);
+  digitalWrite(GRN, !over);
+
+  // beep 100 ms every second, only while over the limit AND water is running
+  if (over &amp;&amp; hands &amp;&amp; millis() - lastBeep &gt;= 1000) lastBeep = millis();
+  digitalWrite(BUZZ, (over &amp;&amp; hands &amp;&amp; millis() - lastBeep &lt; 100) ? HIGH : LOW);
+
+  if (millis() - lastPrint &gt;= 500) {
+    lastPrint = millis();
+    Serial.print(&quot;litres = &quot;); Serial.println(litres, 2);
+  }
+}
+</pre>
+<p class="sub">Arduino IDE: save it inside a folder with the same name (P04_Wudu-Water-Guardian). Tools › Board › Arduino Uno → Port → Upload → Serial Monitor 9600.</p></section>
+<section id="build"><h2>🛠️ Build & test</h2>
+<div class="two"><div class="card"><b>Build order</b><ol><li>Arduino 5V → red rail, GND → blue rail.</li><li>Wire and test the 7-segment alone.</li><li>Add the IR module; set its screw to trigger at about 15 cm — hand distance under a tap.</li><li>Write the timing with millis(). Holding a hand still must make the litres climb steadily.</li><li>Add the LEDs, buzzer and reset button.</li><li>Partner checks every wire, THEN plug in USB.</li><li>Upload and open Serial Monitor (9600).</li></ol></div>
+<div class="card"><b>Test & record (your evidence)</b><ul><li>Hold a hand under it for exactly 10 s — litres shown must equal flow rate × 10.</li><li>Measure your real tap: fill a 1-litre bottle and time it. Put YOUR flow rate in the code.</li><li>Compare a careful ablution with a careless one and record both.</li></ul><b>Tinkercad first</b><ul><li>IR obstacle module → use a Pushbutton (pressed = LOW = &#x27;something close&#x27;), same pin.</li><li>Active buzzer → use an LED + 220Ω in its place so you can SEE every beep (no code change).</li><li>7-segment → &#x27;7 Segment Display&#x27;, set it to Cathode in the inspector.</li></ul></div></div></section>
+<section id="ai"><h2>🤖 AI prompts for this project</h2><p class="sub">Copy a prompt into ChatGPT, Claude, Gemini or Z.ai, fill the blanks, and keep what you used for your marks (Core).</p><div class="prompt"><div class="when">Before you plug in USB</div><pre id="pp0">Check our wiring before we power it. Project: &quot;Wudu Water Guardian&quot; on an Arduino UNO with 7-segment display, LED, Active buzzer, IR obstacle module, Push button. Here is our wiring table: [paste the wiring table]. Is anything dangerous or wrong (5V/GND swapped, LED without resistor, wrong pin)?</pre><button class="btn" onclick="copyText('pp0',this)">📋 Copy prompt</button></div><div class="prompt"><div class="when">Understand the code</div><pre id="pp1">Explain our &quot;Wudu Water Guardian&quot; Arduino code in simple steps: what setup() does, what loop() repeats, and which line decides when the output turns on. [paste the code]</pre><button class="btn" onclick="copyText('pp1',this)">📋 Copy prompt</button></div><div class="prompt"><div class="when">Calibrate with your readings</div><pre id="pp2">In our &quot;Wudu Water Guardian&quot; the Serial Monitor shows ___ when ___ and ___ when ___. What should we put in FLOW_LPS, LIMIT_L and why? Explain like a teacher, no full code.</pre><button class="btn" onclick="copyText('pp2',this)">📋 Copy prompt</button></div><div class="prompt"><div class="when">Problem in class</div><pre id="pp3">In our &quot;Wudu Water Guardian&quot;: Litres climb with nobody there. List the most likely causes in our wiring or code and how to check each one step by step.</pre><button class="btn" onclick="copyText('pp3',this)">📋 Copy prompt</button></div><div class="prompt"><div class="when">Problem in class</div><pre id="pp4">In our &quot;Wudu Water Guardian&quot;: Litres jump instead of climbing smoothly. List the most likely causes in our wiring or code and how to check each one step by step.</pre><button class="btn" onclick="copyText('pp4',this)">📋 Copy prompt</button></div><div class="prompt"><div class="when">Problem in class</div><pre id="pp5">In our &quot;Wudu Water Guardian&quot;: 7-segment shows the wrong shapes. List the most likely causes in our wiring or code and how to check each one step by step.</pre><button class="btn" onclick="copyText('pp5',this)">📋 Copy prompt</button></div><div class="prompt"><div class="when">Problem in class</div><pre id="pp6">In our &quot;Wudu Water Guardian&quot;: Button does nothing. List the most likely causes in our wiring or code and how to check each one step by step.</pre><button class="btn" onclick="copyText('pp6',this)">📋 Copy prompt</button></div><div class="prompt"><div class="when">Make one improvement</div><pre id="pp7">We want to improve our &quot;Wudu Water Guardian&quot;: Keep a running daily total and estimate the water a mosque of 500 worshippers would save. Explain what to change in the code (only the changed lines) and how we can test it in one lesson.</pre><button class="btn" onclick="copyText('pp7',this)">📋 Copy prompt</button></div><div class="prompt"><div class="when">Explain it for the video &amp; poster</div><pre id="pp8">Help us write a 60-second explanation of our &quot;Wudu Water Guardian&quot; for STEM Week visitors: the UAE problem, how the sensor and Arduino decide, and our test results: [paste results]. Simple English, 5 short sentences.</pre><button class="btn" onclick="copyText('pp8',this)">📋 Copy prompt</button></div></section>
+<section id="help"><h2>🆘 Problems in this project</h2><details><summary>Litres climb with nobody there</summary><p style="margin:0 0 6px">the IR screw is too far open, or sunlight is saturating it.</p></details><details><summary>Litres jump instead of climbing smoothly</summary><p style="margin:0 0 6px">you timed with delay() instead of millis().</p></details><div class="note" style="margin:6px 0">💡 The display cannot show past 9 — that is the point of the alarm. Print the exact value to Serial.</div><details><summary>7-segment shows the wrong shapes</summary><p style="margin:0 0 6px">one segment wire is in the wrong pin — check a→D2 … g→D8 against the pinout picture.</p></details><details><summary>Button does nothing</summary><p style="margin:0 0 6px">it is not straddling the centre gap, or both wires are on legs that are already joined. Use legs on OPPOSITE sides of the gap.</p></details><p class="sub">More fixes: <a href="../#help">all troubleshooting</a>.</p></section>
+<section id="show"><h2>🖼️ Cover, poster & video</h2>
+<div class="two"><div class="card"><b>📦 Cover idea</b><p style="margin:4px 0">a model tap and basin from cardboard and a plastic cup, with the IR sensor hidden under the spout.</p><b>🏁 Challenge</b><p style="margin:4px 0 0">Keep a running daily total and estimate the water a mosque of 500 worshippers would save.</p></div>
+<div class="card"><b>🖼️ Poster</b>: name, problem, how it works (3 steps), wiring photo, results, team names.<br><b>🎥 Video 1–2 min</b>: problem • wiring • AI help • live demo • results.</div></div>
+<h2 style="margin-top:18px">📊 Marks – 20</h2><div class="tablewrap"><table><tr><th>Criterion</th><th>What you must do</th><th>For your project</th><th>Marks</th></tr><tr><td><b>🖼️ Support</b></td><td>Choose an idea and create a clear project poster.</td><td>Clear poster of your project.</td><td class="m">4</td></tr><tr><td><b>🤖 Core</b></td><td>Use an AI tool and document the required prompts, examples, or data.</td><td>Use an AI tool; save your prompts + sensor readings.</td><td class="m">4</td></tr><tr><td><b>🧪 Advanced</b></td><td>Build, test, and improve the project using evidence.</td><td>Real build, readings, one improvement.</td><td class="m">4</td></tr><tr><td><b>🎥 Video</b></td><td>Explain the AI process and results in a short video.</td><td>Problem, wiring, AI help, demo, results.</td><td class="m">4</td></tr><tr><td><b>⏰ On time</b></td><td>Submit the complete project on time.</td><td>Everything in by Friday 30 October.</td><td class="m">4</td></tr><tr><td><b>Total</b></td><td></td><td></td><td class="m">20</td></tr></table></div></section>
+<section id="files"><h2>📁 Files</h2><div class="dlrow"><a class="btn" href="../files/sheets/P04_Wudu-Water-Guardian.pdf" target="_blank" rel="noopener">📄 Project sheet (PDF)</a><a class="btn alt" href="../files/sheets/P04_Wudu-Water-Guardian.docx" download>📝 Sheet (Word – fill the tables)</a><a class="btn alt" href="../files/code/P04_Wudu-Water-Guardian.ino" download>💾 Code (.ino)</a><a class="btn alt" href="../files/diagrams/P04_Wudu-Water-Guardian.png" target="_blank" rel="noopener">🔌 Wiring diagram</a></div>
+<div class="dlrow"><a class="btn alt" href="p03.html">← Date Palm Water Saver</a><a class="btn alt" href="../">All projects</a><a class="btn alt" href="p05.html">Cane Companion →</a></div></section>
+</div>
+<footer class="site-footer"><div class="credits"><div class="wrap">
+ <div class="c-k">ICT DEPARTMENT · THE FIRST ACADEMY</div>
+ <div class="c-names">Mr. Saad Abu Saif — ICT Teacher</div>
+ <div class="c-contact"><a href="mailto:saad.abusaif@firstacademy.org">✉️ saad.abusaif@firstacademy.org</a><a href="https://linktr.ee/saadabusaif" target="_blank" rel="noopener">🔗 Linktree</a></div></div></div>
+ <div class="motto"><span>RESPECT</span><span>BELONG</span><span>ACHIEVE</span></div>
+ <div class="bottom">© 2026 The First Academy — Week 8–9 AI Project guide</div></footer>
+<script>
+function copyText(id,btn){const t=document.getElementById(id).innerText;const done=ok=>{const o=btn.textContent;btn.textContent=ok?'✓ Copied':'Select & copy';setTimeout(()=>btn.textContent=o,1500)};
+ if(navigator.clipboard){navigator.clipboard.writeText(t).then(()=>done(true),()=>done(false))}else{done(false)}}
+(function(){const key='tfa-steps-'+location.pathname;let s={};try{s=JSON.parse(localStorage.getItem(key)||'{}')}catch(e){}
+ document.querySelectorAll('ol.timeline li').forEach((li,i)=>{const cb=li.querySelector('input[type=checkbox]');if(!cb)return;cb.checked=!!s[i];li.classList.toggle('done',cb.checked);
+  cb.addEventListener('change',()=>{s[i]=cb.checked;li.classList.toggle('done',cb.checked);try{localStorage.setItem(key,JSON.stringify(s))}catch(e){}})})})();
+</script></body></html>
