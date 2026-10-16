@@ -1,0 +1,145 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#081B45"><title>Grade 7 – My AI Project</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--deep:#081b45;--navy:#0d2c6b;--blue:#17419a;--gold:#ffc845;--soft:#eef4ff;--canvas:#f7f9fd;--card:#fff;--ink:#10203f;--muted:#5a6a88;--line:#dbe4f4;--ok:#1a8f4e;--warnbg:#fff6dc;--warnink:#7a4b00}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--canvas:#0b1222;--card:#131d33;--ink:#e7edf8;--muted:#9fb0cc;--line:#26324c;--soft:#18264a;--blue:#8fb2ff;--navy:#c9dbff;--warnbg:#3a2f12;--warnink:#ffd98a}}
+:root[data-theme="dark"]{--canvas:#0b1222;--card:#131d33;--ink:#e7edf8;--muted:#9fb0cc;--line:#26324c;--soft:#18264a;--blue:#8fb2ff;--navy:#c9dbff;--warnbg:#3a2f12;--warnink:#ffd98a}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--canvas);color:var(--ink);font:16px/1.6 Nunito,system-ui,"Segoe UI",Arial,sans-serif}
+a{color:var(--blue)}
+.wrap{width:min(1000px,calc(100% - 32px));margin:auto}
+/* school header */
+.site-header{color:#fff;background:linear-gradient(180deg,#081b45,#0d2c6b)}
+.top-bar{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 0;flex-wrap:wrap}
+.top-bar-note{color:#ffeab2;font-size:12px}
+.pill{display:inline-block;background:var(--gold);color:#081b45;border-radius:999px;padding:2px 10px;font-size:11px;font-weight:900;letter-spacing:.05em;margin-left:6px}
+.top-bar a{color:#ffeab2;font-size:13px;font-weight:800;text-decoration:none}
+.letterhead{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 0;border-top:1px solid #ffffff22;border-bottom:3px solid var(--gold)}
+.letter-side{display:flex;align-items:center;gap:12px;min-width:0}
+.flag svg{width:46px;height:28px;border-radius:3px;display:block;box-shadow:0 1px 4px #0006}
+.letter-col{font-size:10.5px;line-height:1.55;color:#ffffffcc;margin:0}
+.letter-col p{margin:0}.letter-col .strong{color:var(--gold);font-weight:800;font-size:11.5px}
+.letter-col.ar{text-align:right;direction:rtl;font-size:12px}
+.logo img{width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);background:#fff;display:block}
+.wave svg{display:block;width:100%;height:34px}
+@media(max-width:600px){.letterhead{gap:8px;padding:10px 0}.letter-side{gap:7px;flex:1 1 0}.flag svg{width:30px;height:19px}.logo img{width:38px;height:38px}.letter-col{font-size:8px}.letter-col .strong{font-size:9px}.letter-col.ar{font-size:9.5px}}
+/* hero */
+.hero{padding:22px 0 6px}
+.kicker{color:var(--blue);font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
+.hero h1{margin:4px 0 6px;font-size:clamp(1.7rem,4.5vw,2.5rem);line-height:1.15;color:var(--navy)}
+.hero p{margin:0;color:var(--muted);max-width:760px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{background:var(--soft);border:1px solid var(--line);color:var(--ink);padding:5px 12px;border-radius:999px;font-weight:800;font-size:.86rem}
+.chip.due{background:var(--warnbg);color:var(--warnink);border-color:transparent}
+/* nav */
+nav.steps-nav{position:sticky;top:0;z-index:20;background:var(--canvas);border-bottom:1px solid var(--line);margin-top:14px}
+nav.steps-nav .wrap{display:flex;gap:6px;overflow-x:auto;padding:10px 0;scrollbar-width:none}
+nav.steps-nav a{flex:0 0 auto;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-weight:800;font-size:.9rem}
+nav.steps-nav a:hover{border-color:var(--gold)}
+section{padding:26px 0 4px;scroll-margin-top:60px}
+h2{color:var(--navy);margin:0 0 6px;font-size:1.45rem}
+.sub{color:var(--muted);margin:0 0 14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:12px}
+.corner{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.corner b{display:block;color:var(--navy)}.corner span{font-size:.9rem;color:var(--muted)}
+/* steps */
+ol.timeline{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+ol.timeline li{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px 12px 14px;display:flex;gap:12px;align-items:flex-start}
+ol.timeline .num{flex:0 0 38px;height:38px;border-radius:50%;background:var(--navy);color:var(--card);display:grid;place-items:center;font-weight:900}
+ol.timeline li.done{border-color:var(--ok)}ol.timeline li.done .num{background:var(--ok);color:#fff}
+ol.timeline .body{flex:1}ol.timeline .body>b:first-child{display:block;font-size:1.05rem}
+ol.timeline .body small{color:var(--muted);font-weight:700}
+ol.timeline label{display:flex;align-items:center;gap:6px;font-size:.82rem;color:var(--muted);margin-top:6px;cursor:pointer}
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 16px;margin-bottom:10px}
+details[open]{padding-bottom:12px}
+summary{cursor:pointer;font-weight:900;color:var(--navy);padding:10px 0;font-size:1.05rem}
+details ol,details ul{margin:4px 0;padding-left:1.3em}details li{margin:4px 0}
+.tools a{display:block;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.tools a:hover{border-color:var(--gold)}.tools b{display:block;color:var(--navy)}.tools span{font-size:.86rem;color:var(--muted)}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;font-size:.94rem}
+th{background:#0d2c6b;color:#fff}td.m{font-weight:900;text-align:center;width:70px}
+.tablewrap{overflow-x:auto}
+pre.copy{white-space:pre-wrap;background:var(--soft);border-radius:10px;padding:12px;font:13.5px/1.5 ui-monospace,Consolas,monospace;margin:8px 0}
+.btn{display:inline-flex;gap:6px;align-items:center;background:#0d2c6b;color:#fff;border:0;border-radius:10px;padding:9px 14px;font-weight:800;cursor:pointer;font-size:.92rem;text-decoration:none}
+.note{background:var(--warnbg);color:var(--warnink);border-radius:12px;padding:12px 14px;margin:12px 0;font-size:.94rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:720px){.two{grid-template-columns:1fr}}
+/* footer */
+.site-footer{background:#081b45;color:#ffffffb0;margin-top:40px;text-align:center}
+.credits{background:#0b2358;padding:16px 0}
+.c-k{color:var(--gold);font-size:10px;font-weight:900;letter-spacing:.18em}
+.c-names{color:#fff;font-size:14px;font-weight:800;margin:4px 0}
+.c-contact{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;font-size:13px;margin:6px 0}
+.c-contact a{color:var(--gold);font-weight:800;text-decoration:none;border-bottom:1px dashed #ffc84588}
+.motto{display:flex;justify-content:center;gap:30px;padding:12px;color:#ffeab2;letter-spacing:.22em;font-size:11px;font-weight:800;border-top:1px solid #ffffff18}
+.bottom{font-size:11px;padding:0 0 16px}
+</style></head><body>
+
+<style>
+.g7 h1{font-size:2rem;margin:8px 0} .big ol{font-size:1.1rem}
+.namecard{background:var(--card);border:3px solid var(--gold);border-radius:18px;padding:16px;margin:14px 0}
+.namecard label{display:block;font-weight:900;margin:8px 0 4px}
+.namecard input,.namecard select{width:100%;font:inherit;font-size:1.1rem;padding:10px;border-radius:10px;border:2px solid var(--line);background:var(--canvas);color:var(--ink)}
+.badge{margin-top:12px;background:#0d2c6b;color:#fff;border-radius:14px;padding:14px;text-align:center;font-size:1.2rem;font-weight:900}
+.bigsteps{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.bigsteps li{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;font-size:1.08rem;display:flex;gap:12px;align-items:center}
+.bigsteps .e{font-size:2rem}
+.cls{padding:6px 0;border-top:1px dashed var(--line)} .cls b{margin-right:6px}
+.dl{display:inline-block;background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:2px 10px;margin:2px;font-size:.88rem;text-decoration:none;color:var(--ink)}
+.small{font-size:.88rem;color:var(--muted)}
+.kidtools{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.kidtools a{text-align:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;text-decoration:none;color:var(--ink);font-weight:900}
+</style>
+<div class="wrap g7">
+<h1>🤖 My AI Project – Grade 7</h1>
+<p>Teach the computer with <b>Google Teachable Machine</b>, then show what your AI can do! ⏰ Hand in by <b>Friday 30 October</b>.</p>
+<div class="namecard"><label for="fn">✍️ My full name</label><input id="fn" placeholder="First name, father’s name, family name">
+<div class="two"><div><label for="cl">Class</label><select id="cl"><option>Grade 7</option></select></div>
+<div><label for="sc">Section</label><select id="sc"><option value="">choose…</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select></div></div>
+<div class="badge" id="badge">Write your name above 👆</div></div>
+<h2>🪜 My steps</h2>
+<ol class="bigsteps">
+<li><span class="e">💡</span><span><b>1. Pick an idea</b> – open one below.</span></li>
+<li><span class="e">📸</span><span><b>2. Collect</b> 30+ pictures (or sounds) for each class. Add a “Nothing” class.</span></li>
+<li><span class="e">🧠</span><span><b>3. Train</b> on <a href="https://teachablemachine.withgoogle.com/train" target="_blank" rel="noopener">Teachable Machine</a>.</span></li>
+<li><span class="e">🧪</span><span><b>4. Test & improve</b> – try 10 times, count right answers, add more samples, test again.</span></li>
+<li><span class="e">🖼️</span><span><b>5. Poster</b> – my name, what my AI recognises, who it helps, a screenshot.</span></li>
+<li><span class="e">🎥</span><span><b>6. Video</b> (1–2 min) – how my AI learns and my results.</span></li>
+<li><span class="e">✅</span><span><b>7. Hand in</b> on Google Classroom.</span></li></ol>
+<h2 style="margin-top:22px">💡 Pick an idea (tap to open)</h2><p class="sub">Each idea shows the classes to train and free pictures to download.</p>
+<details><summary>✊ Rock-Paper-Scissors Champion</summary><p style="margin:0 0 6px">Play the hand game against a friend – the page shows the winner.</p><div class="cls"><b>Rock ✊</b> <span>📸 my own photos</span></div><div class="cls"><b>Paper ✋</b> <span>📸 my own photos</span></div><div class="cls"><b>Scissors ✌️</b> <span>📸 my own photos</span></div><div class="cls"><b>Nothing</b> <span>📸 my own photos</span></div></details><details><summary>🎒 AI Smart School Bag</summary><p style="margin:0 0 6px">Learns your textbook covers and checks you packed today’s books.</p><div class="cls"><b>Math book</b> <span>📸 my own photos</span></div><div class="cls"><b>Science book</b> <span>📸 my own photos</span></div><div class="cls"><b>Arabic book</b> <span>📸 my own photos</span></div><div class="cls"><b>English book</b> <span>📸 my own photos</span></div><div class="cls"><b>Nothing</b> <span>📸 my own photos</span></div><p class=small>Use photos of YOUR own school books – 30+ each, different angles and light.</p></details><details><summary>🥪 AI Smart Lunch Box</summary><p style="margin:0 0 6px">Healthy or not healthy for a UAE school? Gives Mum a healthy idea.</p><div class="cls"><b>Healthy 🍎</b> <a class="dl" href="https://pixabay.com/images/search/apple/" target="_blank" rel="noopener">🔍 apple</a><a class="dl" href="https://pixabay.com/images/search/banana/" target="_blank" rel="noopener">🔍 banana</a><a class="dl" href="https://pixabay.com/images/search/carrot%20sticks/" target="_blank" rel="noopener">🔍 carrot sticks</a><a class="dl" href="https://pixabay.com/images/search/cheese%20sandwich/" target="_blank" rel="noopener">🔍 cheese sandwich</a><a class="dl" href="https://pixabay.com/images/search/yogurt/" target="_blank" rel="noopener">🔍 yogurt</a><a class="dl" href="https://pixabay.com/images/search/dates%20fruit/" target="_blank" rel="noopener">🔍 dates fruit</a></div><div class="cls"><b>Not healthy 🍟</b> <a class="dl" href="https://pixabay.com/images/search/potato%20chips/" target="_blank" rel="noopener">🔍 potato chips</a><a class="dl" href="https://pixabay.com/images/search/chocolate%20bar/" target="_blank" rel="noopener">🔍 chocolate bar</a><a class="dl" href="https://pixabay.com/images/search/soda%20can/" target="_blank" rel="noopener">🔍 soda can</a><a class="dl" href="https://pixabay.com/images/search/instant%20noodles/" target="_blank" rel="noopener">🔍 instant noodles</a><a class="dl" href="https://pixabay.com/images/search/donut/" target="_blank" rel="noopener">🔍 donut</a></div><p class=small>UAE schools do not allow chips, chocolate bars &amp; spreads, fizzy/energy drinks, instant noodles, sausages, sweets, cream cakes, peanuts.</p></details><details><summary>🤟 Hand Sign Helper</summary><p style="margin:0 0 6px">Shows big words for “yes”, “no” and “help” from hand signs.</p><div class="cls"><b>Yes 👍</b> <span>📸 my own photos</span></div><div class="cls"><b>No 👎</b> <span>📸 my own photos</span></div><div class="cls"><b>Help ✋</b> <span>📸 my own photos</span></div><div class="cls"><b>Nothing</b> <span>📸 my own photos</span></div></details><details><summary>🍊 Fruit Shop Scanner</summary><p style="margin:0 0 6px">Recognises fruit and shows the price.</p><div class="cls"><b>Apple</b> <a class="dl" href="https://pixabay.com/images/search/apple/" target="_blank" rel="noopener">🔍 apple</a></div><div class="cls"><b>Banana</b> <a class="dl" href="https://pixabay.com/images/search/banana/" target="_blank" rel="noopener">🔍 banana</a></div><div class="cls"><b>Orange</b> <a class="dl" href="https://pixabay.com/images/search/orange%20fruit/" target="_blank" rel="noopener">🔍 orange fruit</a></div></details><details><summary>🏺 Heritage Object Detective</summary><p style="margin:0 0 6px">Names traditional Emirati objects and tells a fun fact.</p><div class="cls"><b>Dallah (coffee pot)</b> <a class="dl" href="https://pixabay.com/images/search/arabic%20coffee%20pot/" target="_blank" rel="noopener">🔍 arabic coffee pot</a></div><div class="cls"><b>Incense burner</b> <a class="dl" href="https://pixabay.com/images/search/incense%20burner/" target="_blank" rel="noopener">🔍 incense burner</a></div><div class="cls"><b>Dhow boat</b> <a class="dl" href="https://pixabay.com/images/search/dhow%20boat/" target="_blank" rel="noopener">🔍 dhow boat</a></div></details>
+<h2 style="margin-top:22px">🧰 Websites</h2>
+<div class="kidtools"><a href="https://teachablemachine.withgoogle.com/train" target="_blank" rel="noopener">📷<br>Teachable Machine</a><a href="https://pixabay.com" target="_blank" rel="noopener">🖼️<br>Pixabay photos</a><a href="https://pixabay.com/sound-effects/" target="_blank" rel="noopener">🔊<br>Free sounds</a><a href="https://www.canva.com" target="_blank" rel="noopener">🎨<br>Canva poster</a></div>
+<h2 style="margin-top:22px">📊 How I get 20 marks</h2>
+<div class="tablewrap"><table><tr><th>I can…</th><th>Marks</th></tr>
+<tr><td>🖼️ choose an idea and make a clear poster</td><td class="m">4</td></tr>
+<tr><td>🤖 use Teachable Machine and save my samples and results</td><td class="m">4</td></tr>
+<tr><td>🧪 test my AI, make it better, and show it</td><td class="m">4</td></tr>
+<tr><td>🎥 explain how my AI learns in a short video</td><td class="m">4</td></tr>
+<tr><td>⏰ hand everything in on time</td><td class="m">4</td></tr></table></div>
+<div class="note">🛡️ Use free photo sites or your own photos. Never photograph other people without asking.</div>
+</div>
+<script>
+(function(){const f=['fn','cl','sc'];let d={};try{d=JSON.parse(localStorage.getItem('g7name')||'{}')}catch(e){}
+const upd=()=>{const n=document.getElementById('fn').value.trim(),s=document.getElementById('sc').value;
+document.getElementById('badge').textContent=n?('⭐ '+n+' — Grade 7'+(s?'-'+s:'')):'Write your name above 👆';
+try{localStorage.setItem('g7name',JSON.stringify({fn:n,sc:s}))}catch(e){}};
+if(d.fn)document.getElementById('fn').value=d.fn; if(d.sc)document.getElementById('sc').value=d.sc;
+['fn','sc'].forEach(i=>document.getElementById(i).addEventListener('input',upd));upd();})();
+</script>
+<footer class="site-footer"><div class="credits"><div class="wrap">
+ <div class="c-k">ICT DEPARTMENT · THE FIRST ACADEMY</div>
+ <div class="c-names">Mr. Saad Abu Saif — ICT Teacher</div>
+ <div class="c-contact"><a href="mailto:saad.abusaif@firstacademy.org">✉️ saad.abusaif@firstacademy.org</a><a href="https://linktr.ee/saadabusaif" target="_blank" rel="noopener">🔗 Linktree</a></div></div></div>
+ <div class="motto"><span>RESPECT</span><span>BELONG</span><span>ACHIEVE</span></div>
+ <div class="bottom">© 2026 The First Academy — Week 8–9 AI Project guide</div></footer>
+<script>
+function copyText(id,btn){const t=document.getElementById(id).innerText;const done=ok=>{const o=btn.textContent;btn.textContent=ok?'✓ Copied':'Select & copy';setTimeout(()=>btn.textContent=o,1500)};
+ if(navigator.clipboard){navigator.clipboard.writeText(t).then(()=>done(true),()=>done(false))}else{done(false)}}
+(function(){const key='tfa-steps-'+location.pathname;let s={};try{s=JSON.parse(localStorage.getItem(key)||'{}')}catch(e){}
+ document.querySelectorAll('ol.timeline li').forEach((li,i)=>{const cb=li.querySelector('input[type=checkbox]');if(!cb)return;cb.checked=!!s[i];li.classList.toggle('done',cb.checked);
+  cb.addEventListener('change',()=>{s[i]=cb.checked;li.classList.toggle('done',cb.checked);try{localStorage.setItem(key,JSON.stringify(s))}catch(e){}})})})();
+</script></body></html>
